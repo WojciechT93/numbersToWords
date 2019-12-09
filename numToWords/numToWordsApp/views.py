@@ -19,5 +19,8 @@ def result(request):
         if form.is_valid():
             template = loader.get_template('result.html')
             return HttpResponse(template.render(context))
-    else:
-        chooseNumber(request)
+            
+    form = chooseNumberForm()
+    context = {"form" : form}
+    template = loader.get_template('chooseNumber.html')
+    return HttpResponse(template.render(context))
