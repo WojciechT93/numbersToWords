@@ -15,11 +15,11 @@ def result(request):
     if request.method == "GET":
         form = chooseNumberForm(request.GET)
         numberWord = num2words(form.number)
-        context = {"form" : form}
+        context = {"numberWord" : numberWord}
         if form.is_valid():
             template = loader.get_template('result.html')
             return HttpResponse(template.render(context))
-            
+
     form = chooseNumberForm()
     context = {"form" : form}
     template = loader.get_template('chooseNumber.html')
