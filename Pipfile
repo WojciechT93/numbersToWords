@@ -1,0 +1,15 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+num2words = "*"
+
+[packages]
+django = "*"
+num2words = {path = "./num2words-0.5.10-py3-none-any.whl"}
+wheel = "*"
+
+[requires]
+python_version = "3.7"
