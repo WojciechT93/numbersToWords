@@ -7,7 +7,7 @@
     <body>
         <form action="/numToWordsApp/result/" method="get">
             {% csrf_token %}
-            {{ form }}
+            {{ form.number }}
             <input type="submit" value="Zamień na liczbę podaną słownie">
         </form>
     </body>

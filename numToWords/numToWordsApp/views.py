@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from .forms import chooseNumberForm 
 from django.template import loader
 from num2words import num2words
+from .numbersToWords import *
 
 def chooseNumber(request):
     form = chooseNumberForm()
@@ -14,7 +15,10 @@ def chooseNumber(request):
 def result(request):
     if request.method == "GET":
         form = chooseNumberForm(request.GET)
-        numberWord = num2words(form.number)
+        number = form['number'].data
+        # W komentarzu poniżej wersja z użyciem gotowej biblioteki num2words.
+        # numberWord = num2words(number, lang = 'pl') 
+        numberWord = getWordsRepresentation(number)
         context = {"numberWord" : numberWord}
         if form.is_valid():
             template = loader.get_template('result.html')
