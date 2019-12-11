@@ -28,7 +28,7 @@ def getWordsRepresentation(number):
             doubleDigitsTo20 = units
             units, tens = 0, 0
 
-        largerTypesWordsGroup = checkWchichLargerType(units, tens, houndreds)
+        largerTypesWordsGroup = checkWchichLargerType(units, tens, houndreds, doubleDigitsTo20)
         
         wordReprTmp = '' 
 
@@ -40,7 +40,7 @@ def getWordsRepresentation(number):
         if not units == 0:
             wordReprTmp += unitsWords[units] + ' '
         if not doubleDigitsTo20 == 0:
-            wordReprTmp += doubleDigitsTo20Words[doubleDigitsTo20 - 1] 
+            wordReprTmp += doubleDigitsTo20Words[doubleDigitsTo20 - 1] + ' '
         if largerTypesWordsGroup is not None and not largerTypes == -1:
             wordReprTmp += largerTypesWords[largerTypesWordsGroup][largerTypes] + ' '
         wordRepr = wordReprTmp + ' ' + wordRepr
@@ -55,7 +55,7 @@ def checkIfNegativeNumber(num):
     else:
         return ''
 
-def checkWchichLargerType(units, tens, houndreds):
+def checkWchichLargerType(units, tens, houndreds, doubleDigitsTo20):
     if units == 1:
         if tens > 0 or houndreds > 0:
             return 2
@@ -63,7 +63,7 @@ def checkWchichLargerType(units, tens, houndreds):
             return 0
     elif units > 1 and units < 5:
         return 1
-    elif units >= 5 or (units == 0 and (tens > 0 or houndreds > 0)):
+    elif units >= 5 or (units == 0 and (tens > 0 or houndreds > 0)) or not doubleDigitsTo20 == 0:
         return 2
     else:
         return None
