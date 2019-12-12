@@ -1,30 +1,36 @@
 from django.shortcuts import render
-
 from django.http import HttpResponse
-from .forms import chooseNumberForm 
 from django.template import loader
+
+from .forms import ChooseNumberForm 
 from num2words import num2words
 from .numbersToWords import *
 
-def chooseNumber(request):
-    form = chooseNumberForm()
+TEMPLATES = {
+    'chooseNumber' : 'chooseNumber.html',
+    'result' : 'result.html'
+}
+
+def choose_number(request):
+    form = ChooseNumberForm()
     context = {"form" : form}
-    template = loader.get_template('chooseNumber.html')
+    template = loader.get_template(TEMPLATES['chooseNumber'])
     return HttpResponse(template.render(context))
 
 def result(request):
     if request.method == "GET":
-        form = chooseNumberForm(request.GET)
-        number = form['number'].data
-        # W komentarzu poniżej wersja z użyciem gotowej biblioteki num2words.
-        # numberWord = num2words(number, lang = 'pl') 
-        numberWord = getWordsRepresentation(number)
-        context = {"numberWord" : numberWord}
+        form = ChooseNumberForm(request.GET)
         if form.is_valid():
-            template = loader.get_template('result.html')
-            return HttpResponse(template.render(context))
-
-    form = chooseNumberForm()
-    context = {"form" : form}
-    template = loader.get_template('chooseNumber.html')
-    return HttpResponse(template.render(context))
+            if form['number'].data:
+                number = form['number'].data
+                if str(number).isdigit():
+                    number = int(number)
+                else:
+                    return HttpResponse(status = 406)
+                # W komentarzu poniżej wersja z użyciem gotowej biblioteki num2words.
+                # numberWord = num2words(number, lang = 'pl') 
+                number_word = get_words_representation(number)
+                context = {"numberWord" : number_word}
+                template = loader.get_template(TEMPLATES['result'])
+                return HttpResponse(template.render(context))
+    return HttpResponse(status = 406)

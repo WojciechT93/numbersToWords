@@ -1,4 +1,4 @@
 from django import forms
 
-class chooseNumberForm(forms.Form):
+class ChooseNumberForm(forms.Form):
     number = forms.IntegerField(label='Podaj numer')
